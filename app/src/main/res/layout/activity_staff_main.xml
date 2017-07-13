@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/staff_main"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_alignParentBottom="true"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/activity_staff_main_ll_staffs"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:background="#ffffff"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/hisstaff_nor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:text="他的店铺"
+            android:textColor="#1e1e1e" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="0.1dp"
+        android:layout_height="match_parent"
+        android:background="@color/smssdk_gray" />
+
+    <LinearLayout
+        android:id="@+id/activity_info_ll_sellerinfo"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:background="#ffffff"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/sellerinfo_nor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:text="卖家信息"
+            android:textColor="#1e1e1e" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="0.1dp"
+        android:layout_height="match_parent"
+        android:background="@color/smssdk_gray" />
+
+    <LinearLayout
+        android:id="@+id/activity_info_ll_love"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.5"
+        android:background="#ffffff"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/love_sel" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:text="收藏"
+            android:textColor="#1e1e1e" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="0.1dp"
+        android:layout_height="match_parent"
+        android:background="@color/smssdk_gray" />
+
+    <Button
+        android:id="@+id/ibuy"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2.5"
+        android:background="@drawable/button2_nor"
+        android:text="我想要"
+        android:textColor="#ffffff"
+        android:textSize="15sp" />
+
+
+</LinearLayout>

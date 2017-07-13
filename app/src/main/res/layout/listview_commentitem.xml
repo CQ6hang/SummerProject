@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/listview_mymessageitem_headpic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/welcome1"
+            app:civ_border_color="#ffffff"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/listview_mymessageitem_sellername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="卖家姓名"
+            android:textColor="#1e1e1e"
+            android:textSize="20sp" />
+
+
+        <TextView
+            android:id="@+id/listview_mymessageitem_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="发布时间"
+            android:textAlignment="textEnd"
+            android:textColor="#1e1e1e"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/smssdk_gray" />
+
+    <TextView
+        android:id="@+id/listview_commentlist_comment"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="你好!"
+        android:textColor="#1e1e1e"
+        android:textSize="18sp" />
+
+
+</LinearLayout>

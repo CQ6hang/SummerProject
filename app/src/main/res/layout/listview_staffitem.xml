@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="#ffffff">
+
+    <ImageView
+        android:id="@+id/listview_staffitem_iv_staffPic"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/welcome1"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/listview_staffitem_tv_StaffName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/listview_staffitem_iv_staffPic"
+        android:text="这是一个东西"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+
+    <TextView
+        android:id="@+id/listview_staffitem_tv_detail"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/listview_staffitem_tv_StaffName"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/listview_staffitem_iv_staffPic"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="商品描述"
+        android:textColor="#000000"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/listview_staffitem_tv_love"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="110dp"
+        android:layout_toRightOf="@+id/listview_staffitem_tv_from"
+        android:background="@drawable/love" />
+
+    <TextView
+        android:id="@+id/listview_staffitem_tv_lovecount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="10dp"
+        android:text="99"
+        android:textColor="#000000"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/listview_staffitem_tv_staffprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/listview_staffitem_tv_StaffName"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:text="9999.99"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/listview_staffitem_tv_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/listview_staffitem_iv_staffPic"
+        android:text="来自重庆大学"
+        android:textColor="#000000"
+        android:textSize="10sp" />
+
+
+</RelativeLayout>

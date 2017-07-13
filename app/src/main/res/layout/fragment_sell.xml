@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fd6a07"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_topbar2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topBar2"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/fragment_sell_ev_staffName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="物品名称"
+            android:maxLines="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="#1e1e1e"
+            android:textColorHint="@color/smssdk_gray" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_below="@+id/listview_staffitem_tv_StaffName"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/smssdk_gray" />
+
+        <RelativeLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_sell_ev_staffName">
+
+            <EditText
+                android:id="@+id/fragment_sell_ev_staffDetail"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="#ffffff"
+                android:gravity="start"
+                android:hint="物品简介"
+                android:maxLines="4"
+                android:padding="10dp"
+                android:textColor="#1e1e1e"
+                android:textColorHint="@color/smssdk_gray" />
+
+            <ImageView
+                android:id="@+id/fragment_sell_bt_pic1"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignBottom="@+id/fragment_sell_ev_staffDetail"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/welcome1"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/fragment_sell_bt_pic2"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignBottom="@+id/fragment_sell_ev_staffDetail"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/fragment_sell_bt_pic1"
+                android:background="@drawable/welcome2"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/fragment_sell_bt_pic3"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignBottom="@+id/fragment_sell_ev_staffDetail"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/fragment_sell_bt_pic2"
+                android:background="@drawable/welcome3"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/fragment_sell_bt_addPic"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignBottom="@+id/fragment_sell_ev_staffDetail"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/fragment_sell_bt_pic3"
+                android:background="@drawable/addpic" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:layout_below="@+id/layout1"
+            android:background="#f9fafc" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="30dp"
+                android:text="价格:"
+                android:textColor="#1e1e1e"
+                android:textSize="25sp" />
+
+            <ImageView
+                android:id="@+id/iv_rmb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/tv_price"
+                android:layout_below="@+id/tv_price"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rmb" />
+
+            <EditText
+                android:id="@+id/ev_rmb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/iv_rmb"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/iv_rmb"
+                android:background="@null"
+                android:digits="0123456789."
+                android:hint="0.0"
+                android:inputType="number"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#1e1e1e"
+                android:textColorHint="@color/smssdk_gray"
+                android:textSize="25sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_alignLeft="@id/ev_rmb"
+                android:layout_alignRight="@+id/ev_rmb"
+                android:layout_below="@id/ev_rmb"
+                android:background="#000000" />
+
+            <Button
+                android:id="@+id/fragent_sell_bt_sure"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/iv_rmb"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/button2_nor"
+                android:text="确定发布"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

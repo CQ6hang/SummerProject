@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bpg3"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_topbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <EditText
+            android:id="@+id/activity_register_et_phone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:digits="0123456789-"
+            android:hint="请输入手机号"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:textColor="#ffffff"
+            android:textColorHint="#bcbdc3" />
+
+        <Button
+            android:id="@+id/activity_register_bt_check"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:background="@drawable/checkbutton_selector"
+            android:text="获取验证码"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/activity_register_et_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="25dp"
+        android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        android:hint="请输入密码"
+        android:inputType="textPassword"
+        android:maxLength="15"
+        android:textColor="#ffffff"
+        android:textColorHint="#bcbdc3" />
+
+    <EditText
+        android:id="@+id/activity_register_et_checkCode"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="25dp"
+        android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        android:hint="验证码"
+        android:maxLength="4"
+        android:textColor="#ffffff"
+        android:textColorHint="#bcbdc3" />
+
+    <Button
+        android:id="@+id/activity_register_bt_login"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/checkbutton_selector"
+        android:text="绑定手机登陆"
+        android:textColor="#ffffff" />
+
+</LinearLayout>

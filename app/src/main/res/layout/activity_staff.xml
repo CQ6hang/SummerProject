@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_topbar3" />
+
+
+    <com.youth.banner.Banner
+        android:id="@+id/activity_staff_banner_staffpic"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@+id/topBar3">
+
+    </com.youth.banner.Banner>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_staff_banner_staffpic"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/content_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="物品名字"
+            android:textColor="#1e1e1e"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/content_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:text="商品描述"
+            android:textColor="#1e1e1e"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/content_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/activity_staff_banner_staffpic"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:text="$300"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="30sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_above="@+id/staff_main"
+        android:background="@color/smssdk_gray" />
+
+    <include layout="@layout/activity_staff_main" />
+
+
+</RelativeLayout>
