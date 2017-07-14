@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,9 +47,15 @@ public class ISellActivity extends BaseActivity implements View.OnClickListener 
 
     public static Staff staff;
 
+    private TextView hint;
+
     final String url = "http://192.168.191.1:8080/WebDemo/servlet/AServlet";
 
     private RequestQueue queue;
+
+    private Button refresh;
+
+    MyBaseAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,11 +65,23 @@ public class ISellActivity extends BaseActivity implements View.OnClickListener 
         title = (TextView) findViewById(R.id.activity_topbar3_tv_title);
         listView = (ListView) findViewById(R.id.activity_isell_listview);
         back = (ImageButton) findViewById(R.id.activity_topbar3_ib_back);
+        hint = (TextView) findViewById(R.id.sell_noDataHint);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View footer = inflater.inflate(R.layout.listview_refresh_footer, null);
+        refresh = (Button) footer.findViewById(R.id.refresh);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
         back.setOnClickListener(this);
         title.setText("我发布的");
         mapList = new ArrayList<>();
-        final MyBaseAdapter adapter = new MyBaseAdapter(this, mapList, queue);
+        adapter = new MyBaseAdapter(this, mapList, queue);
         listView.setAdapter(adapter);
+        listView.addFooterView(footer);
+        listView.setFooterDividersEnabled(false);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -74,6 +94,10 @@ public class ISellActivity extends BaseActivity implements View.OnClickListener 
             }
         });
 
+        loadData();
+    }
+
+    private void loadData() {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -82,6 +106,7 @@ public class ISellActivity extends BaseActivity implements View.OnClickListener 
                     Gson gson = new Gson();
                     staff = gson.fromJson(response, Staff.class);
                     changeData(mapList);
+                    hint.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
                 }
             }

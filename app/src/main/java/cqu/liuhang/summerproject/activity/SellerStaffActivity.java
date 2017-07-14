@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,6 +51,14 @@ public class SellerStaffActivity extends BaseActivity implements View.OnClickLis
 
     private ImageButton back;
 
+    private Button refresh;
+
+    private TextView hint;
+
+    MyBaseAdapter adapter;
+
+    private String sellerID;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,16 +67,29 @@ public class SellerStaffActivity extends BaseActivity implements View.OnClickLis
         queue = Volley.newRequestQueue(this);
 
         mapList = new ArrayList<>();
-        final MyBaseAdapter adapter = new MyBaseAdapter(this, mapList, queue);
+        adapter = new MyBaseAdapter(this, mapList, queue);
 
         Bundle bundle = getIntent().getExtras();
-        final String sellerID = bundle.getString("sellerID");
+        sellerID = bundle.getString("sellerID");
 
         title = (TextView) findViewById(R.id.activity_topbar3_tv_title);
         title.setText("他的店铺");
         listView = (ListView) findViewById(R.id.activity_sellerstaff_listview);
+        hint = (TextView) findViewById(R.id.seller_noDataHint);
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View footer = inflater.inflate(R.layout.listview_refresh_footer, null);
+        refresh = (Button) footer.findViewById(R.id.refresh);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
 
         listView.setAdapter(adapter);
+        listView.addFooterView(footer);
+        listView.setFooterDividersEnabled(false);
         back = (ImageButton) findViewById(R.id.activity_topbar3_ib_back);
         back.setOnClickListener(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -80,6 +103,10 @@ public class SellerStaffActivity extends BaseActivity implements View.OnClickLis
                 startActivity(intent);
             }
         });
+        loadData();
+    }
+
+    private void loadData() {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -87,6 +114,7 @@ public class SellerStaffActivity extends BaseActivity implements View.OnClickLis
                     Gson gson = new Gson();
                     staff = gson.fromJson(response, Staff.class);
                     changeData(mapList);
+                    hint.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
                 }
             }

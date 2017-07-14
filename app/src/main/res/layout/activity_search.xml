@@ -59,6 +59,15 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/search_noDataHint"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="暂无商品"
+        android:textColor="@color/smssdk_gray"
+        android:textSize="20sp" />
+
     <ListView
         android:id="@+id/activity_search_history"
         android:layout_width="match_parent"

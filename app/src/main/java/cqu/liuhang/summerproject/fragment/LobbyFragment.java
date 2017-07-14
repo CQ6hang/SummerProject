@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -51,13 +52,19 @@ public class LobbyFragment extends Fragment {
 
     public static Staff staff;
 
-    private List<Map<String, Object>> mapList;
+    private static List<Map<String, Object>> mapList;
 
     private Banner banner;
 
     final String url = "http://192.168.191.1:8080/WebDemo/servlet/AServlet";
 
     List<Integer> imagesList;
+
+    private TextView hint;
+
+    private MyBaseAdapter adapter;
+
+    private Button refresh;
 
 //    final String pic = "http://192.168.191.1:8080/WebDemo/image/123.jpg";
 
@@ -76,12 +83,24 @@ public class LobbyFragment extends Fragment {
         queue = Volley.newRequestQueue(getActivity());
 
         mapList = new ArrayList<>();
-        final MyBaseAdapter adapter = new MyBaseAdapter(getActivity(), mapList, queue);
+        adapter = new MyBaseAdapter(getActivity(), mapList, queue);
 
         // 向listView添加header
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View view = inflater.inflate(R.layout.listview_ads_header, null);
         banner = (Banner) view.findViewById(R.id.banner);
+        hint = (TextView) view.findViewById(R.id.lobby_noDataHint);
+
+        View footer = inflater.inflate(R.layout.listview_refresh_footer, null);
+        refresh = (Button) footer.findViewById(R.id.refresh);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
+
+
         banner.setImageLoader(new GlideImageLoader());
         imagesList = new ArrayList<>();
         imagesList.add(R.drawable.ads1);
@@ -90,6 +109,9 @@ public class LobbyFragment extends Fragment {
         banner.setImages(imagesList);
         banner.start();
         itemList.addHeaderView(view);
+        itemList.addFooterView(footer);
+        itemList.setFooterDividersEnabled(false);
+        itemList.setHeaderDividersEnabled(false);
 
         itemList.setAdapter(adapter);
 
@@ -112,6 +134,23 @@ public class LobbyFragment extends Fragment {
             }
         });
 
+        loadData();
+
+//        ImageRequest imageRequest = new ImageRequest(pic, new Response.Listener<Bitmap>() {
+//            @Override
+//            public void onResponse(Bitmap response) {
+//                ads.setImageBitmap(response);
+//            }
+//        }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(getActivity(), "无法连接到服务器", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        queue.add(imageRequest);
+    }
+
+    private void loadData() {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -119,6 +158,7 @@ public class LobbyFragment extends Fragment {
                 Gson gson = new Gson();
                 staff = gson.fromJson(response, Staff.class);
                 changeData(mapList);
+                hint.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
@@ -136,19 +176,6 @@ public class LobbyFragment extends Fragment {
             }
         };
         queue.add(request);
-
-//        ImageRequest imageRequest = new ImageRequest(pic, new Response.Listener<Bitmap>() {
-//            @Override
-//            public void onResponse(Bitmap response) {
-//                ads.setImageBitmap(response);
-//            }
-//        }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(getActivity(), "无法连接到服务器", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        queue.add(imageRequest);
     }
 
     public void changeData(List<Map<String, Object>> maps) {
@@ -170,7 +197,6 @@ public class LobbyFragment extends Fragment {
             maps.add(map);
         }
     }
-
 
 //    public List<Map<String, Object>> getData() {
 //        mapList = new ArrayList<>();

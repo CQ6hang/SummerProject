@@ -38,7 +38,9 @@ import java.util.Map;
 
 import cqu.liuhang.summerproject.R;
 import cqu.liuhang.summerproject.activity.LoginActivity;
+import cqu.liuhang.summerproject.activity.MainActivity;
 import cqu.liuhang.summerproject.activity.RegisterActivity;
+import cqu.liuhang.summerproject.activity.WelcomeActivity;
 import cqu.liuhang.summerproject.json.Staff;
 import cqu.liuhang.summerproject.util.Bitmap2StringUtils;
 
@@ -128,6 +130,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                         if (response.equals("true")) {
                             Toast.makeText(getActivity(), "发布成功", Toast.LENGTH_SHORT).show();
                             clearPage();
+                            MainActivity.pages.setCurrentItem(1);
                         } else {
                             Toast.makeText(getActivity(), "发布失败", Toast.LENGTH_SHORT).show();
                         }

@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import java.util.Map;
 
 import cqu.liuhang.summerproject.R;
 import cqu.liuhang.summerproject.adapter.MyBaseAdapter;
+import cqu.liuhang.summerproject.fragment.InfoFragment;
 import cqu.liuhang.summerproject.json.User;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -43,7 +45,9 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText name;
 
-    private EditText sex;
+    private RadioButton girl;
+
+    private RadioButton boy;
 
     private EditText age;
 
@@ -54,6 +58,8 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
     private RequestQueue queue;
 
     private TextView progress;
+
+    private int cnt = 6;
 
     final String url = "http://192.168.191.1:8080/WebDemo/servlet/AServlet";
 
@@ -75,10 +81,12 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
         progress = (TextView) findViewById(R.id.edit_progress);
         headPic = (CircleImageView) findViewById(R.id.edit_headPic);
         name = (EditText) findViewById(R.id.edit_name);
-        sex = (EditText) findViewById(R.id.edit_sex);
+        boy = (RadioButton) findViewById(R.id.boy);
+        girl = (RadioButton) findViewById(R.id.girl);
         age = (EditText) findViewById(R.id.edit_age);
         phone = (TextView) findViewById(R.id.edit_phone);
         address = (EditText) findViewById(R.id.edit_address);
+
 
         back.setOnClickListener(this);
         editButton.setOnClickListener(this);
@@ -91,13 +99,34 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
         ImageLoader.ImageListener listener = ImageLoader.getImageListener(headPic, R.drawable.welcome2, R.drawable.welcome3);
         loader.get(newURL, listener);
 
-        name.setText(user.getUser_name());
-        sex.setText(user.getSex());
-        age.setText(user.getAge() + "");
+        if (user.getUser_name().equals("")) {
+            cnt--;
+        } else {
+            name.setText(user.getUser_name());
+        }
+
+        if (user.getSex().equals("男")) {
+            boy.setChecked(true);
+        } else {
+            girl.setChecked(true);
+        }
+
+        if (user.getAge().equals("-1")) {
+            cnt--;
+        } else {
+            age.setText(user.getAge());
+        }
+
         phone.setText(user.getPhone());
-        address.setText(user.getAddress());
-        progressBar.setProgress(100);
-        progress.setText("完整度 " + 100);
+
+        if (user.getAddress().equals("")) {
+            cnt--;
+        } else {
+            address.setText(user.getAddress());
+        }
+
+        progressBar.setProgress((cnt / 6) * 100);
+        progress.setText("完整度 " + (cnt / 6) * 100);
 
     }
 
@@ -111,8 +140,8 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
                 final User temp = user;
                 temp.setUser_name(name.getText().toString());
                 temp.setAddress(address.getText().toString());
-                temp.setAge(Integer.getInteger(age.getText().toString()));
-                temp.setSex(sex.getText().toString());
+                temp.setAge(age.getText().toString());
+                temp.setSex(boy.isChecked() ? "男" : "女");
 //                user.setHeadimage();
                 StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
@@ -120,6 +149,8 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
                         if (response.equals("true")) {
                             Toast.makeText(EditActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
                             user = temp;
+                            finish();
+                            InfoFragment.refresh();
                         } else {
                             Toast.makeText(EditActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
                         }
@@ -133,9 +164,9 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> map = new HashMap<>();
-                        map.put("rq", "edit");
+                        map.put("rq", "modify");
                         Gson gson = new Gson();
-                        map.put("edit", gson.toJson(temp));
+                        map.put("modify", gson.toJson(temp));
                         return map;
                     }
                 };

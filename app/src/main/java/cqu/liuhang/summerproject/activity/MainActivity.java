@@ -21,7 +21,7 @@ import cqu.liuhang.summerproject.fragment.SellFragment;
 
 public class MainActivity extends BaseActivity {
 
-    private ViewPager pages;
+    public static ViewPager pages;
 
     private RadioGroup menu;
 

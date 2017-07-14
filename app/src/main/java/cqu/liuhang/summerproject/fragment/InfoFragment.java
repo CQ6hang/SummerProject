@@ -51,7 +51,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
 
     private RequestQueue queue;
 
-    private TextView name;
+    static private TextView name;
 
     private String url = "http://192.168.191.1:8080/WebDemo/image";
 
@@ -115,5 +115,9 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
                 break;
             default:
         }
+    }
+
+    public static void refresh() {
+        name.setText(LoginActivity.user != null ? "" + LoginActivity.user.getUser_name() : "" + RegisterActivity.user.getUser_name());
     }
 }

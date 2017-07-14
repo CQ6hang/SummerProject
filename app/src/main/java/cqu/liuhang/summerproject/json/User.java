@@ -10,7 +10,7 @@ public class User {
     private String phone;
     private String user_name;
     private String headimage;
-    private int age;
+    private String age;
     private String sex;
     private String address;
     private String password;
@@ -52,11 +52,11 @@ public class User {
         this.headimage = headimage;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

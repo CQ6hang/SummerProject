@@ -7,6 +7,15 @@
 
     <include layout="@layout/activity_topbar3" />
 
+    <TextView
+        android:id="@+id/love_noDataHint"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="暂无收藏"
+        android:textColor="@color/smssdk_gray"
+        android:textSize="20sp" />
+
     <ListView
         android:id="@+id/activity_ilove_listview"
         android:layout_width="match_parent"

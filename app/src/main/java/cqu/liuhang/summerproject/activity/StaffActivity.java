@@ -178,6 +178,9 @@ public class StaffActivity extends BaseActivity implements View.OnClickListener 
             case R.id.activity_topbar3_ib_back:
                 finish();
                 break;
+            case R.id.ibuy:
+
+                break;
             case R.id.activity_info_ll_love:
                 StringRequest request = new StringRequest(Request.Method.POST, link, new Response.Listener<String>() {
                     @Override
@@ -205,8 +208,8 @@ public class StaffActivity extends BaseActivity implements View.OnClickListener 
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> map = new HashMap<>();
-                        map.put("rq", "changeLove");
-                        map.put("staffid", "");
+                        map.put("rq", "docollect");
+                        map.put("staffid", staff.getStaffList().get(index).getStaff_id());
                         map.put("userid", LoginActivity.user != null ? "" + LoginActivity.user.getUser_id() : "" + RegisterActivity.user.getUser_id());
                         return map;
                     }

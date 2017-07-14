@@ -3,12 +3,13 @@ package cqu.liuhang.summerproject.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -39,7 +40,11 @@ public class SearchActivity extends BaseActivity {
 
     private RequestQueue queue;
 
+    TextView hint;
+
     public static Staff staff;
+
+    MyBaseAdapter adapter;
 
     final String url = "http://192.168.191.1:8080/WebDemo/servlet/AServlet";
 
@@ -52,9 +57,11 @@ public class SearchActivity extends BaseActivity {
         queue = Volley.newRequestQueue(this);
         search = (Button) findViewById(R.id.activity_search_bt_search);
         history = (ListView) findViewById(R.id.activity_search_history);
+        hint = (TextView) findViewById(R.id.search_noDataHint);
         searchInput = (EditText) findViewById(R.id.search_input);
+
         searchHistory = new ArrayList<>();
-        final MyBaseAdapter adapter = new MyBaseAdapter(this, searchHistory, queue);
+        adapter = new MyBaseAdapter(this, searchHistory, queue);
         history.setAdapter(adapter);
         history.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -73,39 +80,46 @@ public class SearchActivity extends BaseActivity {
                 if (searchInput.getText().toString().isEmpty()) {
                     Toast.makeText(SearchActivity.this, "搜索不能为空", Toast.LENGTH_SHORT).show();
                 } else {
-                    StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("search", response);
-                            if (!response.equals("null")) {
-                                Gson gson = new Gson();
-                                staff = gson.fromJson(response, Staff.class);
-                                changeData(searchHistory);
-                                adapter.notifyDataSetChanged();
-                            } else {
-                                searchHistory.clear();
-                                adapter.notifyDataSetChanged();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(SearchActivity.this, "", Toast.LENGTH_SHORT).show();
-                        }
-                    }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> map = new HashMap<>();
-                            map.put("rq", "search");
-                            map.put("search", searchInput.getText().toString());
-                            map.put("userid", LoginActivity.user != null ? "" + LoginActivity.user.getUser_id() : "" + RegisterActivity.user.getUser_id());
-                            return map;
-                        }
-                    };
-                    queue.add(request);
+                    loadData();
                 }
             }
         });
+
+    }
+
+    private void loadData() {
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("search", response);
+                if (!response.equals("null")) {
+                    Gson gson = new Gson();
+                    staff = gson.fromJson(response, Staff.class);
+                    changeData(searchHistory);
+                    hint.setVisibility(View.GONE);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    searchHistory.clear();
+                    adapter.notifyDataSetChanged();
+                    hint.setVisibility(View.VISIBLE);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SearchActivity.this, "无法连接到服务器", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put("rq", "search");
+                map.put("search", searchInput.getText().toString());
+                map.put("userid", LoginActivity.user != null ? "" + LoginActivity.user.getUser_id() : "" + RegisterActivity.user.getUser_id());
+                return map;
+            }
+        };
+        queue.add(request);
     }
 
     private void changeData(List<Map<String, Object>> searchHistory) {
