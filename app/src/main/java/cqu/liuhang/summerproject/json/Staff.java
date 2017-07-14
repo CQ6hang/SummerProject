@@ -20,30 +20,26 @@ public class Staff {
 
     public static class StaffListBean {
         /**
-         * staff_id : 154
-         * seller_id : 1515
-         * staff_name : arrr
-         * staff_pic : rrrrr
-         * staff_price : 153.30
-         * staff_detail : rrqw
+         * staff_id : 1561
+         * seller_id : 1561
+         * staff_name : 裤子
+         * staff_pic : ["/123.jpg","/12.jpg","/555.jpg"]
+         * staff_price : 156.00
+         * staff_detail : 这还是一个裤子，刘航的裤子这还是一个裤子，刘航的裤子这还是一个裤子，刘航的裤子这还是一个裤子，刘航的裤子这还是一个裤子，刘航的裤子这还是一个裤子，刘航的裤子
+         * staff_date : 2017-07-08
+         * collectnum : 99
+         * isCollect : true
          */
 
         private String staff_id;
         private String seller_id;
         private String staff_name;
-        private List<String> staff_pic;
         private String staff_price;
         private String staff_detail;
-        private String staff_data;
+        private String staff_date;
         private String collectnum;
-
-        public String getCollectnum() {
-            return collectnum;
-        }
-
-        public void setCollectnum(String collectnum) {
-            this.collectnum = collectnum;
-        }
+        private boolean isCollect;
+        private List<String> staff_pic;
 
         public String getStaff_id() {
             return staff_id;
@@ -69,14 +65,6 @@ public class Staff {
             this.staff_name = staff_name;
         }
 
-        public List<String> getStaff_pic() {
-            return staff_pic;
-        }
-
-        public void setStaff_pic(List<String> staff_pic) {
-            this.staff_pic = staff_pic;
-        }
-
         public String getStaff_price() {
             return staff_price;
         }
@@ -93,26 +81,36 @@ public class Staff {
             this.staff_detail = staff_detail;
         }
 
-        public String getStaff_data() {
-            return staff_data;
+        public String getStaff_date() {
+            return staff_date;
         }
 
-        public void setStaff_data(String staff_data) {
-            this.staff_data = staff_data;
+        public void setStaff_date(String staff_date) {
+            this.staff_date = staff_date;
         }
 
-        @Override
-        public String toString() {
-            return "StaffListBean{" +
-                    "staff_id='" + staff_id + '\'' +
-                    ", seller_id='" + seller_id + '\'' +
-                    ", staff_name='" + staff_name + '\'' +
-                    ", staff_pic='" + staff_pic + '\'' +
-                    ", staff_price='" + staff_price + '\'' +
-                    ", staff_detail='" + staff_detail + '\'' +
-                    ", staff_data='" + staff_data + '\'' +
-                    ", collectnum='" + collectnum + '\'' +
-                    '}';
+        public String getCollectnum() {
+            return collectnum;
+        }
+
+        public void setCollectnum(String collectnum) {
+            this.collectnum = collectnum;
+        }
+
+        public boolean isIsCollect() {
+            return isCollect;
+        }
+
+        public void setIsCollect(boolean isCollect) {
+            this.isCollect = isCollect;
+        }
+
+        public List<String> getStaff_pic() {
+            return staff_pic;
+        }
+
+        public void setStaff_pic(List<String> staff_pic) {
+            this.staff_pic = staff_pic;
         }
     }
 }

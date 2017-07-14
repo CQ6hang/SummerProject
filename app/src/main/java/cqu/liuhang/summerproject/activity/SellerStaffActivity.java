@@ -56,7 +56,8 @@ public class SellerStaffActivity extends BaseActivity implements View.OnClickLis
 
         queue = Volley.newRequestQueue(this);
 
-        final MyBaseAdapter adapter = new MyBaseAdapter(this, getData(), queue);
+        mapList = new ArrayList<>();
+        final MyBaseAdapter adapter = new MyBaseAdapter(this, mapList, queue);
 
         Bundle bundle = getIntent().getExtras();
         final String sellerID = bundle.getString("sellerID");
@@ -82,10 +83,12 @@ public class SellerStaffActivity extends BaseActivity implements View.OnClickLis
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Gson gson = new Gson();
-                staff = gson.fromJson(response, Staff.class);
-                changeData(mapList);
-                adapter.notifyDataSetChanged();
+                if (!response.equals(null)) {
+                    Gson gson = new Gson();
+                    staff = gson.fromJson(response, Staff.class);
+                    changeData(mapList);
+                    adapter.notifyDataSetChanged();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -97,7 +100,8 @@ public class SellerStaffActivity extends BaseActivity implements View.OnClickLis
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
                 map.put("rq", "otherstaff");
-                map.put("otherstaff", sellerID);
+                map.put("userid", LoginActivity.user != null ? "" + LoginActivity.user.getUser_id() : "" + RegisterActivity.user.getUser_id());
+                map.put("sellerid", sellerID);
                 return map;
             }
         };
@@ -124,19 +128,19 @@ public class SellerStaffActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    public List<Map<String, Object>> getData() {
-        mapList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("pic", "null");
-            map.put("detail", "商品详情" + i);
-            map.put("price", "9999.99");
-            map.put("loveCnt", "0");
-            map.put("name", "商品" + i);
-            mapList.add(map);
-        }
-        return mapList;
-    }
+//    public List<Map<String, Object>> getData() {
+//        mapList = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("pic", "null");
+//            map.put("detail", "商品详情" + i);
+//            map.put("price", "9999.99");
+//            map.put("loveCnt", "0");
+//            map.put("name", "商品" + i);
+//            mapList.add(map);
+//        }
+//        return mapList;
+//    }
 
     @Override
     public void onClick(View v) {

@@ -43,7 +43,7 @@ public class ISellActivity extends BaseActivity implements View.OnClickListener 
 
     private ImageButton back;
 
-    private Staff staff;
+    public static Staff staff;
 
     final String url = "http://192.168.191.1:8080/WebDemo/servlet/AServlet";
 
@@ -59,14 +59,15 @@ public class ISellActivity extends BaseActivity implements View.OnClickListener 
         back = (ImageButton) findViewById(R.id.activity_topbar3_ib_back);
         back.setOnClickListener(this);
         title.setText("我发布的");
-        final MyBaseAdapter adapter = new MyBaseAdapter(this, getData(), queue);
+        mapList = new ArrayList<>();
+        final MyBaseAdapter adapter = new MyBaseAdapter(this, mapList, queue);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("pos", position);
-                bundle.putInt("flag", 1);
+                bundle.putInt("flag", 3);
                 Intent intent = new Intent(ISellActivity.this, StaffActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -77,10 +78,12 @@ public class ISellActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onResponse(String response) {
                 Log.d("staff", response);
-                Gson gson = new Gson();
-                staff = gson.fromJson(response, Staff.class);
-                changeData(mapList);
-                adapter.notifyDataSetChanged();
+                if (!response.equals("null")) {
+                    Gson gson = new Gson();
+                    staff = gson.fromJson(response, Staff.class);
+                    changeData(mapList);
+                    adapter.notifyDataSetChanged();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -92,7 +95,8 @@ public class ISellActivity extends BaseActivity implements View.OnClickListener 
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
                 map.put("rq", "otherstaff");
-                map.put("otherstaff", LoginActivity.user != null ? "" + LoginActivity.user.getUser_id() : "" + RegisterActivity.user.getUser_id());
+                map.put("userid", LoginActivity.user != null ? "" + LoginActivity.user.getUser_id() : "" + RegisterActivity.user.getUser_id());
+                map.put("sellerid", LoginActivity.user != null ? "" + LoginActivity.user.getUser_id() : "" + RegisterActivity.user.getUser_id());
                 return map;
             }
         };
@@ -119,19 +123,19 @@ public class ISellActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    public List<Map<String, Object>> getData() {
-        mapList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("pic", "null");
-            map.put("detail", "商品详情" + i);
-            map.put("price", "9999.99");
-            map.put("loveCnt", "0");
-            map.put("name", "商品" + i);
-            mapList.add(map);
-        }
-        return mapList;
-    }
+//    public List<Map<String, Object>> getData() {
+//        mapList = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("pic", "null");
+//            map.put("detail", "商品详情" + i);
+//            map.put("price", "9999.99");
+//            map.put("loveCnt", "0");
+//            map.put("name", "商品" + i);
+//            mapList.add(map);
+//        }
+//        return mapList;
+//    }
 
     @Override
     public void onClick(View v) {

@@ -73,7 +73,8 @@ public class SellerInfoActivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.seller_info);
 
         queue = Volley.newRequestQueue(this);
-        final CommentAdapter adapter = new CommentAdapter(this, getData(), queue);
+        mapList = new ArrayList<>();
+        final CommentAdapter adapter = new CommentAdapter(this, mapList, queue);
 
         Bundle bundle = getIntent().getExtras();
         final String sellerID = bundle.getString("sellerID");
@@ -98,7 +99,7 @@ public class SellerInfoActivity extends BaseActivity implements View.OnClickList
                 seller = gson.fromJson(response, User.class);
                 sellerName.setText(seller.getUser_name());
                 sellerSex.setImageResource(seller.getSex().equals("男") ? R.drawable.male : R.drawable.female);
-                phone.setText(seller.getPhone());
+                phone.setText(seller.getQq());
                 address.setText(seller.getAddress());
 
                 String newURL;
@@ -184,16 +185,16 @@ public class SellerInfoActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    public List<Map<String, Object>> getData() {
-        mapList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("headPic", "null");
-            map.put("name", "评论员" + i);
-            map.put("date", "2017/7/11");
-            map.put("comment", "还可以" + i);
-            mapList.add(map);
-        }
-        return mapList;
-    }
+//    public List<Map<String, Object>> getData() {
+//        mapList = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("headPic", "null");
+//            map.put("name", "评论员" + i);
+//            map.put("date", "2017/7/11");
+//            map.put("comment", "还可以" + i);
+//            mapList.add(map);
+//        }
+//        return mapList;
+//    }
 }

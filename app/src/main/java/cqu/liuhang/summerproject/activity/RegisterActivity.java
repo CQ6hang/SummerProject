@@ -102,6 +102,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                 Log.d("tag", response);
                                 if (response.equals("exsist")) {
                                     Toast.makeText(RegisterActivity.this, "账号已存在", Toast.LENGTH_SHORT).show();
+                                    buttonFlag = true;
+                                    login.setText("绑定手机登陆");
                                 } else {
                                     Gson gson = new Gson();
                                     user = gson.fromJson(response, User.class);

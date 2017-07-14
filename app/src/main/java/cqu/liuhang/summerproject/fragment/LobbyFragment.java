@@ -28,6 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cqu.liuhang.summerproject.activity.LoginActivity;
+import cqu.liuhang.summerproject.activity.RegisterActivity;
 import cqu.liuhang.summerproject.util.GlideImageLoader;
 import cqu.liuhang.summerproject.R;
 import cqu.liuhang.summerproject.activity.SearchActivity;
@@ -73,7 +75,8 @@ public class LobbyFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         queue = Volley.newRequestQueue(getActivity());
 
-        final MyBaseAdapter adapter = new MyBaseAdapter(getActivity(), getData(), queue);
+        mapList = new ArrayList<>();
+        final MyBaseAdapter adapter = new MyBaseAdapter(getActivity(), mapList, queue);
 
         // 向listView添加header
         LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -128,7 +131,7 @@ public class LobbyFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
                 map.put("rq", "staff");
-                map.put("staff", "");
+                map.put("userid", LoginActivity.user != null ? "" + LoginActivity.user.getUser_id() : "" + RegisterActivity.user.getUser_id());
                 return map;
             }
         };
@@ -169,18 +172,18 @@ public class LobbyFragment extends Fragment {
     }
 
 
-    public List<Map<String, Object>> getData() {
-        mapList = new ArrayList<>();
-
-        for (int i = 0; i < 20; i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("pic", "null");
-            map.put("detail", "商品详情" + i);
-            map.put("price", "9999.99");
-            map.put("loveCnt", "0");
-            map.put("name", "商品" + i);
-            mapList.add(map);
-        }
-        return mapList;
-    }
+//    public List<Map<String, Object>> getData() {
+//        mapList = new ArrayList<>();
+//
+//        for (int i = 0; i < 20; i++) {
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("pic", "null");
+//            map.put("detail", "商品详情" + i);
+//            map.put("price", "9999.99");
+//            map.put("loveCnt", "0");
+//            map.put("name", "商品" + i);
+//            mapList.add(map);
+//        }
+//        return mapList;
+//    }
 }

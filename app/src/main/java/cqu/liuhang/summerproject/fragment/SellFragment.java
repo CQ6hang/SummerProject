@@ -118,6 +118,10 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 startActivityForResult(intent, 1);
                 break;
             case R.id.fragent_sell_bt_sure:
+                if (checkEmpty()) {
+                    Toast.makeText(getActivity(), "请完善物品信息", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -148,6 +152,11 @@ public class SellFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private boolean checkEmpty() {
+        return staffName.getText().toString().isEmpty() || staffDetail.getText().toString().isEmpty()
+                || price.getText().toString().isEmpty() || imageString.isEmpty();
+    }
+
     private void clearPage() {
         // 清空页面
         staffName.setText("");
@@ -171,7 +180,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
 
         bean.setCollectnum("0");
         bean.setStaff_id("0");
-        bean.setStaff_data("0");
+        bean.setStaff_date("0");
 
         bean.setStaff_detail(staffDetail.getText().toString());
         bean.setStaff_name(staffName.getText().toString());

@@ -16,6 +16,12 @@
 
     </com.youth.banner.Banner>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_below="@+id/activity_staff_banner_staffpic"
+        android:background="@color/smssdk_gray" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,13 +38,22 @@
             android:textColor="#1e1e1e"
             android:textSize="30sp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/smssdk_gray" />
+
         <TextView
             android:id="@+id/content_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
+            android:maxLines="8"
             android:text="商品描述"
             android:textColor="#1e1e1e"
             android:textSize="15sp" />

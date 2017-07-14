@@ -108,16 +108,18 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.activity_edit_bt_edit:
-                user.setUser_name(name.getText().toString());
-                user.setAddress(address.getText().toString());
-                user.setAge(Integer.getInteger(age.getText().toString()));
-                user.setSex(sex.getText().toString());
+                final User temp = user;
+                temp.setUser_name(name.getText().toString());
+                temp.setAddress(address.getText().toString());
+                temp.setAge(Integer.getInteger(age.getText().toString()));
+                temp.setSex(sex.getText().toString());
 //                user.setHeadimage();
                 StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if (response.equals("true")) {
                             Toast.makeText(EditActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+                            user = temp;
                         } else {
                             Toast.makeText(EditActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
                         }
@@ -133,7 +135,7 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
                         Map<String, String> map = new HashMap<>();
                         map.put("rq", "edit");
                         Gson gson = new Gson();
-                        map.put("edit", gson.toJson(user));
+                        map.put("edit", gson.toJson(temp));
                         return map;
                     }
                 };

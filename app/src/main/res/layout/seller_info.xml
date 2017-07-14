@@ -52,7 +52,7 @@
             android:layout_alignBottom="@+id/sex_text"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/sex_text"
-            android:src="@drawable/male"/>
+            android:src="@drawable/male" />
 
     </RelativeLayout>
 
@@ -74,7 +74,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/phone_pic" />
+            android:background="@drawable/qq" />
 
         <TextView
             android:id="@+id/text01"
@@ -150,7 +150,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
-        android:text="评论专区"
+        android:text="留言区"
         android:textColor="#1e1e1e"
         android:textSize="25sp" />
 
@@ -164,7 +164,9 @@
     <ListView
         android:id="@+id/seller_comment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:divider="@color/smssdk_gray_press"
+        android:dividerHeight="5dp">
 
     </ListView>
 

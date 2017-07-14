@@ -59,7 +59,8 @@ public class MyCommentActivity extends BaseActivity implements View.OnClickListe
         back.setOnClickListener(this);
 
         listView = (ListView) findViewById(R.id.activity_mymessage_listview);
-        final CommentAdapter adapter = new CommentAdapter(this, getData(), queue);
+        mapList = new ArrayList<>();
+        final CommentAdapter adapter = new CommentAdapter(this, mapList, queue);
         listView.setAdapter(adapter);
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -105,18 +106,18 @@ public class MyCommentActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
-    public List<Map<String, Object>> getData() {
-        mapList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("headPic", "null");
-            map.put("name", "评论员" + i);
-            map.put("date", "2017/7/11");
-            map.put("comment", "还可以" + i);
-            mapList.add(map);
-        }
-        return mapList;
-    }
+//    public List<Map<String, Object>> getData() {
+//        mapList = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("headPic", "null");
+//            map.put("name", "评论员" + i);
+//            map.put("date", "2017/7/11");
+//            map.put("comment", "还可以" + i);
+//            mapList.add(map);
+//        }
+//        return mapList;
+//    }
 
     @Override
     public void onClick(View v) {

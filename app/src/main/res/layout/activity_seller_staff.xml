@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     android:orientation="vertical">
 
     <include layout="@layout/activity_topbar3" />
@@ -9,6 +10,8 @@
     <ListView
         android:id="@+id/activity_sellerstaff_listview"
         android:layout_width="match_parent"
+        android:divider="@color/smssdk_gray_press"
+        android:dividerHeight="5dp"
         android:layout_height="match_parent">
 
     </ListView>
