@@ -109,6 +109,10 @@ public class ILoveActivity extends BaseActivity implements View.OnClickListener 
                     changeData(mapList);
                     hint.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
+                } else {
+                    changeData(mapList);
+                    hint.setVisibility(View.VISIBLE);
+                    adapter.notifyDataSetChanged();
                 }
             }
         }, new Response.ErrorListener() {

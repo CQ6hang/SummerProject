@@ -116,6 +116,10 @@ public class SellerStaffActivity extends BaseActivity implements View.OnClickLis
                     changeData(mapList);
                     hint.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
+                }else{
+                    changeData(mapList);
+                    hint.setVisibility(View.VISIBLE);
+                    adapter.notifyDataSetChanged();
                 }
             }
         }, new Response.ErrorListener() {

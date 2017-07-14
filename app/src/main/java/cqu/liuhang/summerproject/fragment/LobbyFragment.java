@@ -155,11 +155,17 @@ public class LobbyFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 Log.d("staff", response);
-                Gson gson = new Gson();
-                staff = gson.fromJson(response, Staff.class);
-                changeData(mapList);
-                hint.setVisibility(View.GONE);
-                adapter.notifyDataSetChanged();
+                if (!response.equals("null")) {
+                    Gson gson = new Gson();
+                    staff = gson.fromJson(response, Staff.class);
+                    changeData(mapList);
+                    hint.setVisibility(View.GONE);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    changeData(mapList);
+                    hint.setVisibility(View.VISIBLE);
+                    adapter.notifyDataSetChanged();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
