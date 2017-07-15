@@ -22,7 +22,13 @@ import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
 import cqu.liuhang.summerproject.R;
 import cqu.liuhang.summerproject.json.User;
 
@@ -48,6 +54,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private boolean flag = true;
 
+    private Button qq;
+
+    private RequestQueue queue;
+
     final String url = "http://192.168.191.1:8080/WebDemo/servlet/AServlet";
 
     @Override
@@ -55,11 +65,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         findView();
+        queue = Volley.newRequestQueue(this);
         title.setText("");
         jump.setText("注册");
         back.setVisibility(View.INVISIBLE);
         jump.setOnClickListener(this);
         login.setOnClickListener(this);
+        qq.setOnClickListener(this);
     }
 
     private void findView() {
@@ -69,6 +81,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         back = (ImageButton) findViewById(R.id.activity_topbar_ib_back);
         title = (TextView) findViewById(R.id.activity_topbar_tv_title);
         jump = (Button) findViewById(R.id.activity_topbar_bt_jump);
+        qq = (Button) findViewById(R.id.qq);
     }
 
     @Override
@@ -77,6 +90,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.activity_topbar_bt_jump:
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.qq:
+                otherLogin();
                 break;
             case R.id.activity_login_bt_login:
                 if (flag) {
@@ -95,8 +111,60 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
+    private void otherLogin() {
+        Platform qq = ShareSDK.getPlatform(QQ.NAME);
+        qq.SSOSetting(false);  //设置false表示使用SSO授权方式
+        qq.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                Log.d("tag", "授权成功");
+                final String openId = platform.getDb().getUserId();
+                StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.equals("false")) {
+                            Toast.makeText(LoginActivity.this, "QQ登录失败，请重试", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Gson gson = new Gson();
+                            user = gson.fromJson(response, User.class);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(LoginActivity.this, "无法连接到服务器", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> map = new HashMap<>();
+                        map.put("rq", "loginqq");
+                        map.put("token", openId);
+                        return map;
+                    }
+                };
+                queue.add(request);
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                Log.d("tag", "授权失败");
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+
+            }
+        }); // 设置分享事件回调
+
+        qq.authorize();//单独授权
+        qq.showUser(null);//授权并获取用户信息
+    }
+
     private void sendLoginRequest() {
-        RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

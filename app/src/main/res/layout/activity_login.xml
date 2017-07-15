@@ -58,5 +58,42 @@
         android:text="登录"
         android:textColor="#ffffff" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/qq"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/loginqq" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="0.5dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/qq"
+            android:background="#ffffff" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="0.5dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/qq"
+            android:background="#ffffff" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="QQ登陆"
+        android:textColor="#ffffff" />
+
 
 </LinearLayout>

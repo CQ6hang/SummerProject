@@ -194,9 +194,9 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
         } else {
             address.setText(user.getAddress());
         }
-
-        progressBar.setProgress((cnt / 6) * 100);
-        progress.setText("完整度 " + (cnt / 6) * 100);
+        Log.d("tag", "" + cnt);
+        progressBar.setProgress(cnt * 100 / 6);
+        progress.setText("完整度 " + cnt * 100 / 6);
 
     }
 
