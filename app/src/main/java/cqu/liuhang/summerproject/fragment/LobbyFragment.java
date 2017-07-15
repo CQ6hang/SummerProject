@@ -162,7 +162,7 @@ public class LobbyFragment extends Fragment {
                     hint.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
                 } else {
-                    changeData(mapList);
+                    mapList.clear();
                     hint.setVisibility(View.VISIBLE);
                     adapter.notifyDataSetChanged();
                 }

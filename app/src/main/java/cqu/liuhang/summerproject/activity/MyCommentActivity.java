@@ -66,10 +66,15 @@ public class MyCommentActivity extends BaseActivity implements View.OnClickListe
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Gson gson = new Gson();
-                userComment = gson.fromJson(response, UserComment.class);
-                changeData(mapList);
-                adapter.notifyDataSetChanged();
+                if (!response.equals("null")) {
+                    Gson gson = new Gson();
+                    userComment = gson.fromJson(response, UserComment.class);
+                    changeData(mapList);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    mapList.clear();
+                    adapter.notifyDataSetChanged();
+                }
             }
         }, new Response.ErrorListener() {
             @Override

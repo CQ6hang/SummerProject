@@ -22,8 +22,8 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:background="@drawable/search" />
 
             <Button
@@ -43,7 +43,7 @@
         android:id="@+id/fragment_lobby_lv_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/smssdk_gray_press"
+        android:divider="#ffffff"
         android:dividerHeight="5dp">
 
     </ListView>

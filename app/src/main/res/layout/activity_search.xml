@@ -32,7 +32,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@drawable/smssdk_search_icon" />
+                android:background="@drawable/search" />
 
             <EditText
                 android:id="@+id/search_input"

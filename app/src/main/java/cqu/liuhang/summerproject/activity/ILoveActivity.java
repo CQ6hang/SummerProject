@@ -110,7 +110,7 @@ public class ILoveActivity extends BaseActivity implements View.OnClickListener 
                     hint.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
                 } else {
-                    changeData(mapList);
+                    mapList.clear();
                     hint.setVisibility(View.VISIBLE);
                     adapter.notifyDataSetChanged();
                 }

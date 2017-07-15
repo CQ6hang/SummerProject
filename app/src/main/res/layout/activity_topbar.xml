@@ -8,12 +8,12 @@
 
     <ImageButton
         android:id="@+id/activity_topbar_ib_back"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/back_selector" />
+        android:background="@drawable/back_nor" />
 
     <TextView
         android:id="@+id/activity_topbar_tv_title"
@@ -36,7 +36,7 @@
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
         android:text="XX"
-        android:textColor="#fd6a07"
+        android:textColor="#ffffff"
         android:textSize="20sp" />
 
 </RelativeLayout>
