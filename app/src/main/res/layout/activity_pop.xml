@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/sendMessage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:alpha="0.8"
+        android:background="#e6e6e6"
+        android:gravity="start"
+        android:maxLength="120"
+        android:paddingLeft="5dp"
+        android:paddingRight="80dp"
+        android:paddingTop="5dp"
+        android:textColor="#000000" />
+
+    <Button
+        android:id="@+id/sendCancel"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignRight="@id/sendMessage"
+        android:layout_alignTop="@id/sendMessage"
+        android:background="@drawable/cancel" />
+
+
+    <Button
+        android:id="@+id/sureSend"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@id/sendMessage"
+        android:layout_alignRight="@id/sendMessage"
+        android:background="@drawable/button2_nor"
+        android:text="留言" />
+
+</RelativeLayout>

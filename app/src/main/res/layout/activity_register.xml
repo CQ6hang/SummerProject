@@ -76,7 +76,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/checkbutton_selector"
-        android:text="绑定手机登陆"
+        android:text="注册"
         android:textColor="#ffffff" />
 
 </LinearLayout>

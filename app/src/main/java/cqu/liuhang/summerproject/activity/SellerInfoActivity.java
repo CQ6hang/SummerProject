@@ -3,7 +3,6 @@ package cqu.liuhang.summerproject.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -41,30 +40,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SellerInfoActivity extends BaseActivity implements View.OnClickListener {
 
-    private ImageButton back;
-
-    private TextView title;
-
-    private List<Map<String, Object>> mapList;
-
-    private ListView listView;
-
-    private RequestQueue queue;
-
-    private User seller;
-
-    private CircleImageView headPic;
-
-    private TextView sellerName;
-
-    private ImageView sellerSex;
-
-    private TextView phone;
-
-    private TextView address;
-
+    public static User seller;
     private final String url = "http://192.168.191.1:8080/WebDemo/servlet/AServlet";
-
+    private ImageButton back;
+    private TextView title;
+    private List<Map<String, Object>> mapList;
+    private ListView listView;
+    private RequestQueue queue;
+    private CircleImageView headPic;
+    private TextView sellerName;
+    private ImageView sellerSex;
+    private TextView phone;
+    private TextView address;
     private String imageUrl = "http://192.168.191.1:8080/WebDemo/image";
 
     private UserComment userComment;

@@ -1,8 +1,15 @@
 package cqu.liuhang.summerproject.activity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,59 +44,37 @@ import cqu.liuhang.summerproject.adapter.MyBaseAdapter;
 import cqu.liuhang.summerproject.fragment.InfoFragment;
 import cqu.liuhang.summerproject.json.User;
 import cqu.liuhang.summerproject.json.UserLocation;
+import cqu.liuhang.summerproject.util.Bitmap2StringUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditActivity extends BaseActivity implements View.OnClickListener {
 
-    private ImageButton back;
-
-    private TextView title;
-
-    private User user;
-
-    private ProgressBar progressBar;
-
-    private Button editButton;
-
-    private CircleImageView headPic;
-
-    private EditText name;
-
-    private RadioButton girl;
-
-    private RadioButton boy;
-
-    private EditText age;
-
-    private TextView phone;
-
-    private TextView address;
-
-    private RequestQueue queue;
-
-    private TextView progress;
-
-    private int cnt = 6;
-
-    public LocationClient mLocationClient = null;
-
-    public BDLocationListener myListener = new MyLocationListener();
-
-    private Button getAddress;
-
-    Handler handler;
-
-    String myLocation;
-
-    String latitude;
-
-    String lontitude;
-
-    String radius;
-
     final String url = "http://192.168.191.1:8080/WebDemo/servlet/AServlet";
-
     final String imageurl = "http://192.168.191.1:8080/WebDemo/image";
+    public LocationClient mLocationClient = null;
+    public BDLocationListener myListener = new MyLocationListener();
+    Handler handler;
+    String myLocation;
+    String latitude;
+    String lontitude;
+    String radius;
+    String imageString = "";
+    private ImageButton back;
+    private TextView title;
+    private User user;
+    private ProgressBar progressBar;
+    private Button editButton;
+    private CircleImageView headPic;
+    private EditText name;
+    private RadioButton girl;
+    private RadioButton boy;
+    private EditText age;
+    private EditText qq;
+    private TextView address;
+    private RequestQueue queue;
+    private TextView progress;
+    private int cnt = 6;
+    private Button getAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +102,7 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
         boy = (RadioButton) findViewById(R.id.boy);
         girl = (RadioButton) findViewById(R.id.girl);
         age = (EditText) findViewById(R.id.edit_age);
-        phone = (TextView) findViewById(R.id.edit_phone);
+        qq = (EditText) findViewById(R.id.edit_qq);
         address = (TextView) findViewById(R.id.edit_address);
 
 
@@ -125,6 +110,7 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
         editButton.setOnClickListener(this);
         title.setText("修改信息");
         getAddress.setOnClickListener(this);
+        headPic.setOnClickListener(this);
 
         String newURL;
         newURL = imageurl.concat(user.getHeadimage());
@@ -187,7 +173,11 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
             age.setText(user.getAge());
         }
 
-        phone.setText(user.getPhone());
+        if (user.getQq().equals("")) {
+            cnt--;
+        } else {
+            qq.setText(user.getQq());
+        }///
 
         if (user.getAddress().equals("")) {
             cnt--;
@@ -196,7 +186,7 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
         }
         Log.d("tag", "" + cnt);
         progressBar.setProgress(cnt * 100 / 6);
-        progress.setText("完整度 " + cnt * 100 / 6);
+        progress.setText("完整度 " + cnt * 100 / 6 + "%");
 
     }
 
@@ -237,6 +227,113 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
         //可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
 
         mLocationClient.setLocOption(option);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.activity_topbar3_ib_back:
+                finish();
+                break;
+            case R.id.getAddress:
+                mLocationClient.start();
+//                mLocationClient.stop();
+                break;
+            case R.id.edit_headPic:
+                changePic();
+                break;
+            case R.id.activity_edit_bt_edit:
+                final User temp = user;
+                temp.setUser_name(name.getText().toString());
+                temp.setAddress(address.getText().toString());
+                temp.setQq(qq.getText().toString());
+                temp.setAge(age.getText().toString());
+                temp.setSex(boy.isChecked() ? "男" : "女");
+                temp.setHeadimage(imageString);
+                StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("user", response);
+                        if (!response.equals("false")) {
+                            Toast.makeText(EditActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+                            Gson gson = new Gson();
+
+                            User newUser = gson.fromJson(response, User.class);
+                            user.setUser_name(newUser.getUser_name());
+                            user.setAddress(newUser.getAddress());
+                            user.setQq(newUser.getQq());
+                            user.setAge(newUser.getAge());
+                            user.setSex(newUser.getSex());
+                            Log.d("url", newUser.getHeadimage());
+                            user.setHeadimage(newUser.getHeadimage());
+
+                            finish();
+                            InfoFragment.refresh();
+                        } else {
+                            Toast.makeText(EditActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(EditActivity.this, "无法连接到服务器", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> map = new HashMap<>();
+                        map.put("rq", "modify");
+                        Gson gson = new Gson();
+                        map.put("modify", gson.toJson(temp));
+                        return map;
+                    }
+                };
+                queue.add(request);
+                break;
+            default:
+        }
+    }
+
+    private void changePic() {
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumns = {MediaStore.Images.Media.DATA};
+            Cursor c = this.getContentResolver().query(selectedImage, filePathColumns, null, null, null);
+            if (c != null) {
+                c.moveToFirst();
+                int columnIndex = c.getColumnIndex(filePathColumns[0]);
+
+                String imagePath = c.getString(columnIndex);
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true; // 只获取图片的大小信息，而不是将整张图片载入在内存中，避免内存溢出
+                BitmapFactory.decodeFile(imagePath, options);
+                int height = options.outHeight;
+                int width = options.outWidth;
+                int inSampleSize = 2; // 默认像素压缩比例，压缩为原图的1/2
+                int minLen = Math.min(height, width); // 原图的最小边长
+                if (minLen > 100) { // 如果原始图像的最小边长大于100dp（此处单位我认为是dp，而非px）
+                    float ratio = (float) minLen / 100.0f; // 计算像素压缩比例
+                    inSampleSize = (int) ratio;
+                }
+                options.inJustDecodeBounds = false; // 计算好压缩比例后，这次可以去加载原图了
+                options.inSampleSize = inSampleSize; // 设置为刚才计算的压缩比例
+
+                Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options); // 解码文件
+
+                headPic.setImageBitmap(bitmap);
+
+                imageString = Bitmap2StringUtils.convertIconToString(bitmap);
+                c.close();
+            }
+        }
     }
 
     public class MyLocationListener implements BDLocationListener {
@@ -359,53 +456,4 @@ public class EditActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.activity_topbar3_ib_back:
-                finish();
-                break;
-            case R.id.getAddress:
-                mLocationClient.start();
-//                mLocationClient.stop();
-                break;
-            case R.id.activity_edit_bt_edit:
-                final User temp = user;
-                temp.setUser_name(name.getText().toString());
-                temp.setAddress(address.getText().toString());
-                temp.setAge(age.getText().toString());
-                temp.setSex(boy.isChecked() ? "男" : "女");
-//                user.setHeadimage();
-                StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response.equals("true")) {
-                            Toast.makeText(EditActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
-                            user = temp;
-                            finish();
-                            InfoFragment.refresh();
-                        } else {
-                            Toast.makeText(EditActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(EditActivity.this, "无法连接到服务器", Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> map = new HashMap<>();
-                        map.put("rq", "modify");
-                        Gson gson = new Gson();
-                        map.put("modify", gson.toJson(temp));
-                        return map;
-                    }
-                };
-                queue.add(request);
-                break;
-            default:
-        }
-    }
 }

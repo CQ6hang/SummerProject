@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -40,7 +39,6 @@ import cqu.liuhang.summerproject.R;
 import cqu.liuhang.summerproject.activity.LoginActivity;
 import cqu.liuhang.summerproject.activity.MainActivity;
 import cqu.liuhang.summerproject.activity.RegisterActivity;
-import cqu.liuhang.summerproject.activity.WelcomeActivity;
 import cqu.liuhang.summerproject.json.Staff;
 import cqu.liuhang.summerproject.util.Bitmap2StringUtils;
 
@@ -50,34 +48,20 @@ import cqu.liuhang.summerproject.util.Bitmap2StringUtils;
 
 public class SellFragment extends Fragment implements View.OnClickListener {
 
-    private Button edit;
-
-    private ImageButton cancel;
-
-    private EditText staffName;
-
-    private EditText staffDetail;
-
-    private Button addPic;
-
-    private EditText price;
-
-    private Button sure;
-
-    private RequestQueue queue;
-
-    private List<String> imageString = new ArrayList<>();
-
-    private ImageView pic1;
-
-    private ImageView pic2;
-
-    private ImageView pic3;
-
-    private int cnt;
-
     final String url = "http://192.168.191.1:8080/WebDemo/servlet/AServlet";
-
+    private Button edit;
+    private ImageButton cancel;
+    private EditText staffName;
+    private EditText staffDetail;
+    private Button addPic;
+    private EditText price;
+    private Button sure;
+    private RequestQueue queue;
+    private List<String> imageString;
+    private ImageView pic1;
+    private ImageView pic2;
+    private ImageView pic3;
+    private int cnt;
 
     @Nullable
     @Override
@@ -88,6 +72,8 @@ public class SellFragment extends Fragment implements View.OnClickListener {
         pic3 = (ImageView) view.findViewById(R.id.fragment_sell_bt_pic3);
         edit = (Button) view.findViewById(R.id.activity_topbar2_bt_edit);
         cancel = (ImageButton) view.findViewById(R.id.activity_topbar2_ib_cancel);
+
+        imageString = new ArrayList<>();
 
         staffName = (EditText) view.findViewById(R.id.fragment_sell_ev_staffName);
         staffDetail = (EditText) view.findViewById(R.id.fragment_sell_ev_staffDetail);
@@ -228,6 +214,7 @@ public class SellFragment extends Fragment implements View.OnClickListener {
                 }
                 options.inJustDecodeBounds = false; // 计算好压缩比例后，这次可以去加载原图了
                 options.inSampleSize = inSampleSize; // 设置为刚才计算的压缩比例
+
                 Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options); // 解码文件
 
                 setPic(bitmap);

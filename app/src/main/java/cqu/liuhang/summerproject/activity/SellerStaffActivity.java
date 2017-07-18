@@ -37,26 +37,16 @@ import cqu.liuhang.summerproject.json.Staff;
 
 public class SellerStaffActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView title;
-
-    private ListView listView;
-
-    private List<Map<String, Object>> mapList;
-
-    private RequestQueue queue;
-
     public static Staff staff;
-
     final String url = "http://192.168.191.1:8080/WebDemo/servlet/AServlet";
-
-    private ImageButton back;
-
-    private Button refresh;
-
-    private TextView hint;
-
     MyBaseAdapter adapter;
-
+    private TextView title;
+    private ListView listView;
+    private List<Map<String, Object>> mapList;
+    private RequestQueue queue;
+    private ImageButton back;
+    private Button refresh;
+    private TextView hint;
     private String sellerID;
 
     @Override
@@ -116,7 +106,7 @@ public class SellerStaffActivity extends BaseActivity implements View.OnClickLis
                     changeData(mapList);
                     hint.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
-                }else{
+                } else {
                     mapList.clear();
                     hint.setVisibility(View.VISIBLE);
                     adapter.notifyDataSetChanged();

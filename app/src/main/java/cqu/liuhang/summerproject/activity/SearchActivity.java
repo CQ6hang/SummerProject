@@ -3,7 +3,6 @@ package cqu.liuhang.summerproject.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -32,22 +31,14 @@ import cqu.liuhang.summerproject.json.Staff;
 
 public class SearchActivity extends BaseActivity {
 
-    private Button search;
-
-    private EditText searchInput;
-
-    private ListView history;
-
-    private RequestQueue queue;
-
-    TextView hint;
-
     public static Staff staff;
-
-    MyBaseAdapter adapter;
-
     final String url = "http://192.168.191.1:8080/WebDemo/servlet/AServlet";
-
+    TextView hint;
+    MyBaseAdapter adapter;
+    private Button search;
+    private EditText searchInput;
+    private ListView history;
+    private RequestQueue queue;
     private List<Map<String, Object>> searchHistory;
 
     @Override
@@ -102,6 +93,7 @@ public class SearchActivity extends BaseActivity {
                     searchHistory.clear();
                     adapter.notifyDataSetChanged();
                     hint.setVisibility(View.VISIBLE);
+                    Toast.makeText(SearchActivity.this, "亲,没有这个商品哦", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {

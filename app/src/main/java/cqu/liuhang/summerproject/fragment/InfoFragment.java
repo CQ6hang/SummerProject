@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -35,25 +34,26 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class InfoFragment extends Fragment implements View.OnClickListener {
 
 
+    private static CircleImageView headPic;
+    private static RequestQueue queue;
+    static private TextView name;
+    private static String url = "http://192.168.191.1:8080/WebDemo/image";
     private ImageButton button;
-
     private TextView title;
-
     private Button edit;
-
     private LinearLayout iSell;
-
     private LinearLayout iCollect;
-
     private LinearLayout comment;
 
-    private CircleImageView headPic;
-
-    private RequestQueue queue;
-
-    static private TextView name;
-
-    private String url = "http://192.168.191.1:8080/WebDemo/image";
+    public static void refresh() {
+        name.setText(LoginActivity.user != null ? "" + LoginActivity.user.getUser_name() : "" + RegisterActivity.user.getUser_name());
+        String newURL;
+        newURL = url.concat(LoginActivity.user != null ? "" + LoginActivity.user.getHeadimage() : "" + RegisterActivity.user.getHeadimage());
+        Log.d("URL", newURL);
+        ImageLoader loader = new ImageLoader(queue, new MyBaseAdapter.BitmapCache());
+        ImageLoader.ImageListener listener = ImageLoader.getImageListener(headPic, R.drawable.welcome2, R.drawable.welcome3);
+        loader.get(newURL, listener);
+    }
 
     @Nullable
     @Override
@@ -87,7 +87,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
 
         String newURL;
         newURL = url.concat(LoginActivity.user != null ? "" + LoginActivity.user.getHeadimage() : "" + RegisterActivity.user.getHeadimage());
-//            Log.d("URL", newURL);
+//        Log.d("URL", newURL);
         ImageLoader loader = new ImageLoader(queue, new MyBaseAdapter.BitmapCache());
         ImageLoader.ImageListener listener = ImageLoader.getImageListener(headPic, R.drawable.welcome2, R.drawable.welcome3);
         loader.get(newURL, listener);
@@ -115,9 +115,5 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
                 break;
             default:
         }
-    }
-
-    public static void refresh() {
-        name.setText(LoginActivity.user != null ? "" + LoginActivity.user.getUser_name() : "" + RegisterActivity.user.getUser_name());
     }
 }

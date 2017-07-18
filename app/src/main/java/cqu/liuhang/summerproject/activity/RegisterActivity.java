@@ -1,12 +1,10 @@
 package cqu.liuhang.summerproject.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,37 +37,22 @@ import cqu.liuhang.summerproject.json.User;
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView title;
-
-    private Button jump;
-
-    private ImageButton back;
-
-    private EditText phone;
-
-    private EditText pwd;
-
-    final String AppKey = "1f34ed43e03f8";
-
-    final String AppSecret = "ffd7f8896e01d45e6801f725c28c7c42";
-
-    private EditText checkCode;
-
-    private Button check;
-
-    private Button login;
-
-    private boolean flag = true;
-
-    private Handler handler;
-
-    private RequestQueue queue;
-
     public static User user;
-
-    private boolean buttonFlag = true;
-
+    final String AppKey = "1f34ed43e03f8";
+    final String AppSecret = "ffd7f8896e01d45e6801f725c28c7c42";
     final String url = "http://192.168.191.1:8080/WebDemo/servlet/AServlet";
+    private TextView title;
+    private Button jump;
+    private ImageButton back;
+    private EditText phone;
+    private EditText pwd;
+    private EditText checkCode;
+    private Button check;
+    private Button login;
+    private boolean flag = true;
+    private Handler handler;
+    private RequestQueue queue;
+    private boolean buttonFlag = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,14 +86,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                 if (response.equals("exsist")) {
                                     Toast.makeText(RegisterActivity.this, "账号已存在", Toast.LENGTH_SHORT).show();
                                     buttonFlag = true;
-                                    login.setText("绑定手机登陆");
+                                    login.setText("注册");
                                 } else {
                                     Gson gson = new Gson();
                                     user = gson.fromJson(response, User.class);
                                     buttonFlag = true;
-                                    login.setText("绑定手机登陆");
-                                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                    startActivity(intent);
+                                    login.setText("注册");
+                                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }
                             }
                         }, new Response.ErrorListener() {
@@ -118,7 +101,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                             public void onErrorResponse(VolleyError error) {
                                 Toast.makeText(RegisterActivity.this, "连接不到服务器", Toast.LENGTH_SHORT).show();
                                 buttonFlag = true;
-                                login.setText("绑定手机登陆");
+                                login.setText("注册");
                             }
                         }) {
                             @Override
@@ -145,7 +128,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         ((Throwable) data).printStackTrace();
                         Toast.makeText(RegisterActivity.this, "验证码错误", Toast.LENGTH_SHORT).show();
                         buttonFlag = true;
-                        login.setText("绑定手机登陆");
+                        login.setText("注册");
                     }
                 }
             }
